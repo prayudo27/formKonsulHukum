@@ -1,0 +1,31 @@
+<?php
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+
+    //Mendapatkan nilai variable
+    $stasiun_radio = $_POST['stasiun_radio'];
+    $nama = $_POST['nama'];
+    $jabatan = $_POST['jabatan'];
+    $alamat = $_POST['alamat'];
+    $telepon = $_POST['telepon'];
+    $email = $_POST['email'];
+    $materi = $_POST['materi'];
+    $waktu_pelaksanaan = $_POST['waktu_pelaksanaan'];
+
+    //Convert Tanggal
+    $newdate = date("Y-m-d", strtotime($waktu_pelaksanaan));
+
+    //pembuatan syntax sql
+    $sql = "INSERT INTO konsul_hkm (stasiun_radio, nama_lengkap, jabatan, alamat, telepon, email, materi, waktu_pelaksanaan)
+    VALUES ('$stasiun_radio', '$nama','$jabatan', '$alamat', '$telepon', '$email', '$materi', '$newdate')";
+
+    //import file koneksi database
+    require_once 'koneksi.php';
+
+    //eksekusi query database
+    if (mysqli_query($con, $sql)) {
+        echo 'Data berhasil ditambahkan';
+    } else {
+        echo 'Data gagal ditambahkan';
+    }
+    mysqli_close($con);
+}
